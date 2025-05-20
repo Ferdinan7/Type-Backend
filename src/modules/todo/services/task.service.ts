@@ -2,11 +2,14 @@ import prisma from "@shared/models/prisma";
 import { TaskStatus } from '@prisma/client'
 
 //Obtener todas las tareas a traves de Prisma
-export const getAllTasks = (status?: TaskStatus) => {
+export const getAllTasks = (status?: TaskStatus, user_id?: string) => {
   return prisma.task.findMany({
-    where: status ? { status} : undefined,
-  })
-}
+    where: {
+      ...(user_id ? { user_id } : {}),
+      ...(status ? { status } : {})
+    }
+  });
+};
 
 //Obtener una tarea por su ID
 export const getTaskById = (id: number) =>
@@ -18,7 +21,9 @@ export const getTaskById = (id: number) =>
 export const createTask = (data: {
   title: string;
   description?: string;
-  status?: TaskStatus
+  status?: TaskStatus;
+  completed?: boolean;
+  user_id: string;
 }) => prisma.task.create({ data });
 
 //Actualizar una tarea

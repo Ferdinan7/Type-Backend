@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 
 //Rutas
 import taskRoutes from "./modules/todo/routes/task.routes";
+import authRoutes from "./modules/supa/routes/auth.routes";
 
 //Middlewares
 import { errorHandler } from "./shared/middlewares/errorHandler";
@@ -26,6 +27,7 @@ app.get("/", (req, res) => {
 
 //Rutas
 app.use("/tasks", taskRoutes)
+app.use("/auth", authRoutes)
 
 //Middlewares
 app.use(errorHandler);
