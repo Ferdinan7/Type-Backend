@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import * as jwt from 'jsonwebtoken';
 
-const SUPABASE_JWT_SECRET = process.env.SUPABASE_JWT_SECRET;
+const SUPABASE_JWT_SECRET = process.env.SUPABASE_JWT_SECRET!;
 
 // Extender la interfaz Request para incluir la propiedad user
 interface SupabaseUserJwtPayload {
