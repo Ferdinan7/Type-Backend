@@ -1,8 +1,8 @@
-
 // task.routes.ts - Versión corregida
 import { Router } from "express";
 import * as controller from "../controllers/task.controller";
 import { authGuard } from "@shared/middlewares/authGuard";
+import { requireEmailVerified } from "@shared/middlewares/requireEmailVerified";
 
 const router = Router();
 
@@ -10,11 +10,9 @@ const router = Router();
 // no necesitamos envolverlos nuevamente aquí
 router.get("/", authGuard(), controller.getAll);
 router.get("/:id", authGuard(), controller.getById);
-router.post("/", authGuard(true), controller.create);
-router.put("/:id", authGuard(true), controller.update);
-router.delete("/:id", authGuard(true), controller.remove);
-
-// Si tienes la ruta para updateStatus, también la añadimos
-// router.patch("/:id/status", authGuard(true), controller.updateStatus);
+router.post("/", authGuard(), requireEmailVerified, controller.create);
+router.put("/:id", authGuard(), requireEmailVerified, controller.update);
+router.delete("/:id", authGuard(), requireEmailVerified, controller.remove);
+router.patch("/:id/status", authGuard(), requireEmailVerified, controller.updateStatus)
 
 export default router;
